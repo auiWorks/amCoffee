@@ -1,0 +1,8 @@
+{
+    "appName": {
+        "message": "amCoffee"
+    },
+    "appDesc": {
+        "message": "A CoffeeScript version of the Chrome Console."
+    }
+}

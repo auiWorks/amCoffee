@@ -1,0 +1,6 @@
+*.js
+!*.min.js
+
+.DS_Store
+Thumbs.db
+Desktop.ini
