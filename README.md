@@ -3,6 +3,9 @@ amCoffee
 
 A CoffeeScript version of the Chrome Console.
 
+Run as Chrome Extension:  
+https://chrome.google.com/webstore/detail/amcoffee/eohnbihebhopoapemdbbodaiaagpogik
+
 Features
 --------
 
@@ -16,15 +19,15 @@ Use it the way you use the original console, but with CoffeeScript!
 Usage
 -----
 
-Compile all `.coffee` into `.js` using default compile options
+1. Compile all `.coffee` into `.js` using default compile options
 with [CoffeeScript](http://coffeescript.org/) compiler.
 
-Import it into Chrome. You know how, right?
+2. Import it into Chrome. You know how, right?
 
 Packaging
 ---------
 
-There is a packager I wrote:
+Here is a packager I wrote:  
 https://github.com/aioutecism/util-appPackager
 
 License
