@@ -27,8 +27,8 @@ with [CoffeeScript](http://coffeescript.org/) compiler.
 Packaging
 ---------
 
-Here is a packager I wrote:  
-https://github.com/aioutecism/util-appPackager
+Here is a packager:  
+https://github.com/auiWorks/util-appPackager
 
 License
 -------
