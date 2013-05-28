@@ -128,7 +128,10 @@ amCoffee =
             matches = source.match /(([a-z_$@0-9]+\.)*)[a-z_$@0-9]*$/i
             context = matches[1]
             if context is ''
-                context = 'window'
+                if matches = source.match /"(?:[^"\\]|\\.)*"\.[a-z_$@0-9]*$|'(?:[^'\\]|\\.)*'\.[a-z_$@0-9]*$/i
+                    context = 'new String("")'
+                else
+                    context = 'window'
             else
                 context = context.substr 0, context.length - 1
 
