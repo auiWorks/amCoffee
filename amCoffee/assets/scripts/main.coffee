@@ -298,7 +298,8 @@ amCoffee =
                     return
 
                 for data in datas
-                    parent.print typeof data[1], data[1]
+                    parent.print typeof data[1], data[1],
+                        printType : data[0]
 
                 callback() if callback
 
@@ -351,11 +352,14 @@ amCoffee =
             };
         })();"""
 
-    print : (type, result) ->
+    print : (type, result, options) ->
         me = amCoffee
 
         $outputResult = document.createElement 'LINE'
         $outputResult.appendChild me.impl type, result
+
+        if options
+            $outputResult.className += " #{options.printType}" if options.printType
 
         me.$outputs.appendChild $outputResult
 

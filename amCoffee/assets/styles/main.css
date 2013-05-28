@@ -34,11 +34,33 @@ line.prompt::after {
     width: 10px;
     height: 10px;
     white-space: pre-wrap;
-    background: url(../images/arrow.svg) no-repeat;
+    background: url(../images/icon_arrow.svg) no-repeat;
     background-size: 10px auto;
 }
 line.prompt {
     color: #0080FF;
+}
+line.error::after {
+    content: '';
+    position: absolute;
+    left: -17px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    white-space: pre-wrap;
+    background: url(../images/icon_error.svg) no-repeat;
+    background-size: 10px auto;
+}
+line.warn::after {
+    content: '';
+    position: absolute;
+    left: -17px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    white-space: pre-wrap;
+    background: url(../images/icon_warn.svg) no-repeat;
+    background-size: 10px auto;
 }
 
 item {
@@ -108,7 +130,7 @@ item.val {
     min-height: 1.5em;
 }
 #promptLine::after {
-    background-image: url(../images/arrow_active.svg);
+    background-image: url(../images/icon_arrow_active.svg);
 }
 
 #prompt {
