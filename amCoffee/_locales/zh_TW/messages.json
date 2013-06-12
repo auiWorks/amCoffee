@@ -1,8 +1,17 @@
 {
-    "appName": {
-        "message": "amCoffee"
+    "appName" : {
+        "message" : "amCoffee"
     },
-    "appDesc": {
-        "message": "CoffeeScript 版本的 Chrome Console。"
+    "appDesc" : {
+        "message" : "CoffeeScript 版本的 Chrome Console。"
+    },
+    "settings" : {
+        "message" : "設置"
+    },
+    "settings_autoComplete_aggressive" : {
+        "message" : "積極的自動補全"
+    },
+    "tips_settings" : {
+        "message" : "個性化？"
     }
 }
