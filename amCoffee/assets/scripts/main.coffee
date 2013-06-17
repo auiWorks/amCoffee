@@ -1,93 +1,101 @@
 window.addEventListener 'load', ->
-    amCoffee.init()
+    C.init()
 
-amCoffee =
-    setting :
-        autoComplete_wildMode : false
+C =
+    storage : (key, value) ->
+        json = localStorage.getItem key
+        obj  = JSON.parse json if json
+
+        if value isnt undefined
+            obj = value
+            localStorage.setItem key, JSON.stringify obj
+
+        return obj
+
+    setting : (key) ->
+        setting = C.storage('setting') || {}
+
+        return setting[key]
 
     init : ->
-        me = this
+        C.$outputs      = document.getElementById 'outputs'
+        C.$promptLine   = document.getElementById 'promptLine'
+        C.$prompt       = document.getElementById 'prompt'
+        C.$autoComplete = document.getElementById 'autoComplete'
 
-        me.$outputs      = document.getElementById 'outputs'
-        me.$promptLine   = document.getElementById 'promptLine'
-        me.$prompt       = document.getElementById 'prompt'
-        me.$autoComplete = document.getElementById 'autoComplete'
-
-        me.console.init()
+        C.console.init()
 
         document.body.addEventListener 'click', (e) ->
-            me.focusPrompt e
+            C.focusPrompt e
 
         isOverride = (e) ->
             override   = ([9, 38, 40].indexOf(e.keyCode) isnt -1)
             override ||= ([13].indexOf(e.keyCode) isnt -1 and ! e.shiftKey)
             override ||= ([74, 75, 76, 85].indexOf(e.keyCode) isnt -1 and e.ctrlKey)
 
-        me.$prompt.addEventListener 'keydown', (e) ->
+        C.$prompt.addEventListener 'keydown', (e) ->
             return unless isOverride e
             e.preventDefault()
 
             # enter
             if e.keyCode is 13
-                me.run()
+                C.run()
             # tab
             else if e.keyCode is 9 and e.shiftKey
-                me.autoComplete.nav -1
+                C.autoComplete.nav -1
             # tab
             else if e.keyCode is 9 and ! e.shiftKey
-                me.autoComplete.nav +1
+                C.autoComplete.nav +1
             # up
             else if e.keyCode is 38
-                if me.autoComplete.ing
-                    me.autoComplete.nav -1
+                if C.autoComplete.ing
+                    C.autoComplete.nav -1
                 else
-                    me.history.rewind -1
+                    C.history.rewind -1
             # down
             else if e.keyCode is 40
-                if me.autoComplete.ing
-                    me.autoComplete.nav +1
+                if C.autoComplete.ing
+                    C.autoComplete.nav +1
                 else
-                    me.history.rewind +1
+                    C.history.rewind +1
             # ctrl+k
             else if e.keyCode is 75
-                me.history.rewind -1
+                C.history.rewind -1
             # ctrl+j
             else if e.keyCode is 74
-                me.history.rewind +1
+                C.history.rewind +1
             # ctrl+l
             else if e.keyCode is 76
-                me.clearScreen()
+                C.clearScreen()
             # ctrl+u
             else if e.keyCode is 85
-                me.clearPrompt()
+                C.clearPrompt()
 
-        me.$prompt.addEventListener 'input', me.autoComplete.listener
-        me.autoComplete.listener()
+        C.$prompt.addEventListener 'input', C.autoComplete.listener
+        C.autoComplete.listener()
 
-        me.$prompt.focus()
+        C.$prompt.focus()
 
-        me.history.load()
+        C.history.load()
+
+        C.tips.init()
 
     focusPrompt : (e) ->
-        me = amCoffee
+        C.$prompt.focus()
 
-        me.$prompt.focus()
-
-        return if e and e.target is me.$prompt
-        return if me.$prompt.innerText.trim() is ''
+        return if e and e.target is C.$prompt
+        return if C.$prompt.innerText.trim() is ''
 
         # Set cursor to last
         range = document.createRange()
-        range.setStart me.$prompt, me.$prompt.childNodes.length
+        range.setStart C.$prompt, C.$prompt.childNodes.length
         range.collapse true
         sel = window.getSelection()
         sel.removeAllRanges()
         sel.addRange range
 
     currentPosition : ->
-        me = amCoffee
-
-        source   = me.$prompt.innerText
+        source   = C.$prompt.innerText
         position = source.lastIndexOf('\n') + 1
 
         return position if position is source.length
@@ -102,15 +110,14 @@ amCoffee =
         ing      : false
 
         listener : ->
-            parent = amCoffee
-            me     = parent.autoComplete
+            me = C.autoComplete
 
             clearTimeout arguments.callee.timer if arguments.callee.timer?
 
             arguments.callee.timer = setTimeout ->
-                source = parent.$prompt.innerText
+                source = C.$prompt.innerText
 
-                unless parent.currentPosition() is source.length
+                unless C.currentPosition() is source.length
                     me.hide()
                     return
 
@@ -119,8 +126,7 @@ amCoffee =
             , 100
 
         getPatterns : (source) ->
-            parent = amCoffee
-            me     = parent.autoComplete
+            me = C.autoComplete
 
             source = source.split '\n'
             source = source[source.length - 1]
@@ -158,8 +164,7 @@ amCoffee =
             return true
 
         list : (source) ->
-            parent = amCoffee
-            me     = parent.autoComplete
+            me = C.autoComplete
 
             me.hide()
 
@@ -174,7 +179,7 @@ amCoffee =
 
             avaliablePatterns = []
 
-            if parent.setting.autoComplete_wildMode
+            if C.setting 'autoComplete_aggressive'
                 regexp = input.replace /(.)/g, "$1.*"
                 regexp = "^#{regexp}"
                 regexp = new RegExp regexp, 'i'
@@ -193,30 +198,27 @@ amCoffee =
             for pattern in avaliablePatterns
                 $_ = document.createElement 'LI'
                 $_.innerHTML = pattern
-                parent.$autoComplete.appendChild $_
+                C.$autoComplete.appendChild $_
 
             me.show()
 
         show : ->
-            parent = amCoffee
-            me     = parent.autoComplete
+            me = C.autoComplete
 
             me.ing = true;
             
-            parent.$autoComplete.style.display = 'block'
+            C.$autoComplete.style.display = 'block'
 
         hide : ->
-            parent = amCoffee
-            me     = parent.autoComplete
+            me = C.autoComplete
 
             me.ing = false;
 
-            parent.$autoComplete.style.display = 'none'
-            parent.$autoComplete.innerHTML     = ''
+            C.$autoComplete.style.display = 'none'
+            C.$autoComplete.innerHTML     = ''
 
         clean : ->
-            parent = amCoffee
-            me     = parent.autoComplete
+            me = C.autoComplete
 
             me.hide()
 
@@ -224,12 +226,11 @@ amCoffee =
             me.context  = ''
 
         nav : (direction) ->
-            parent = amCoffee
-            me     = parent.autoComplete
+            me = C.autoComplete
 
             return unless me.ing
 
-            $now = parent.$autoComplete.querySelector('.active')
+            $now = C.$autoComplete.querySelector('.active')
 
             if $now
                 if direction is -1
@@ -238,9 +239,15 @@ amCoffee =
                     $to = $now.nextElementSibling
             else
                 if direction is -1
-                    $to = parent.$autoComplete.lastChild
+                    $to = C.$autoComplete.lastChild
                 else
-                    $to = parent.$autoComplete.firstChild
+                    $to = C.$autoComplete.firstChild
+
+            unless $to
+                if direction is -1
+                    $to = C.$autoComplete.lastChild
+                else
+                    $to = C.$autoComplete.firstChild
 
             if $to
                 $now.className = '' if $now
@@ -249,25 +256,23 @@ amCoffee =
                 me.fill $to.innerHTML
 
         fill : (pattern) ->
-            parent = amCoffee
-            me     = parent.autoComplete
+            me = C.autoComplete
 
-            sourceOriginal = parent.$prompt.innerText
+            sourceOriginal = C.$prompt.innerText
 
             source = sourceOriginal.split '\n'
             source = source[source.length - 1]
             return unless matches = source.match /\.?([a-z_$@0-9]*)$/i
             return if matches[0] isnt '.' and matches[1] is ''
 
-            parent.$prompt.innerText = (sourceOriginal.substr 0, sourceOriginal.length - matches[1].length) \
+            C.$prompt.innerText = (sourceOriginal.substr 0, sourceOriginal.length - matches[1].length) \
                                      + pattern
 
-            parent.focusPrompt()
+            C.focusPrompt()
 
     console :
         init : ->
-            parent = amCoffee
-            me     = parent.console
+            me = C.console
 
             script = """(function(){
                 if (window.__amCoffee_consoleStack) return;
@@ -286,8 +291,7 @@ amCoffee =
             chrome.devtools.inspectedWindow.eval script
 
         retrieve : (callback) ->
-            parent = amCoffee
-            me     = parent.console
+            me = C.console
 
             script = """(function(){
                 var ret = window.__amCoffee_consoleStack;
@@ -297,41 +301,39 @@ amCoffee =
 
             chrome.devtools.inspectedWindow.eval script, (datas, isException) ->
                 if isException
-                    parent.print 'err', datas
+                    C.print 'err', datas
                     return
 
                 for data in datas
-                    parent.print typeof data[1], data[1],
+                    C.print typeof data[1], data[1],
                         printType : data[0]
 
                 callback() if callback
 
     run : ->
-        me = amCoffee
-
-        source = me.$prompt.innerText.trim()
+        source = C.$prompt.innerText.trim()
 
         return unless source isnt ''
 
-        input = me.$prompt.innerHTML
-        me.clearPrompt()
-        me.history.push input
+        input = C.$prompt.innerHTML
+        C.clearPrompt()
+        C.history.push input
 
         $outputPrompt           = document.createElement 'LINE'
         $outputPrompt.className = 'prompt'
         $outputPrompt.innerHTML = input
-        me.$outputs.appendChild $outputPrompt
+        C.$outputs.appendChild $outputPrompt
 
         try
-            compiled = me.compile source
+            compiled = C.compile source
             chrome.devtools.inspectedWindow.eval compiled, (data, isException) ->
-                me.console.retrieve ->
+                C.console.retrieve ->
                     if isException
-                        me.print 'err', data
+                        C.print 'err', data
                     else
-                        me.print data.type, data.result
+                        C.print data.type, data.result
         catch err
-            me.print 'err', err.message
+            C.print 'err', err.message
 
     compile : (source) ->
         # warp source in a function so it always returns a value
@@ -356,22 +358,18 @@ amCoffee =
         })();"""
 
     print : (type, result, options) ->
-        me = amCoffee
-
         $outputResult = document.createElement 'LINE'
-        $outputResult.appendChild me.impl type, result
+        $outputResult.appendChild C.impl type, result
 
         if options
             $outputResult.className += " #{options.printType}" if options.printType
 
-        me.$outputs.appendChild $outputResult
+        C.$outputs.appendChild $outputResult
 
         setTimeout ->
-            me.$prompt.focus()
+            C.$prompt.focus()
 
     impl : (type, result) ->
-        me = amCoffee
-
         $output = document.createElement 'ITEM'
 
         if Array.isArray result
@@ -383,7 +381,7 @@ amCoffee =
 
                 $val           = document.createElement 'ITEM'
                 $val.className = 'val'
-                $val.appendChild me.impl typeof val, val
+                $val.appendChild C.impl typeof val, val
                 $objectElement.appendChild $val
 
                 $output.appendChild $objectElement
@@ -402,7 +400,7 @@ amCoffee =
 
                 $val           = document.createElement 'ITEM'
                 $val.className = 'val'
-                $val.appendChild me.impl typeof val, val
+                $val.appendChild C.impl typeof val, val
                 $objectElement.appendChild $val
 
                 $output.appendChild $objectElement
@@ -414,24 +412,20 @@ amCoffee =
         return $output
 
     clearScreen : ->
-        me = amCoffee
+        C.$outputs.innerHTML = ''
 
-        me.$outputs.innerHTML = ''
-
-        me.focusPrompt()
+        C.focusPrompt()
 
     clearPrompt : ->
-        me = amCoffee
-
-        me.$prompt.innerHTML = ''
-        me.autoComplete.listener()
+        C.$prompt.innerHTML = ''
+        C.autoComplete.listener()
 
     history :
         stack : []
         now   : 0
 
         push : (source) ->
-            me = amCoffee.history
+            me = C.history
 
             me.stack.push source unless source is me.stack[me.stack.length - 1]
             me.now = me.stack.length
@@ -439,36 +433,57 @@ amCoffee =
             me.save()
 
         rewind : (step) ->
-            parent = amCoffee
-            me     = parent.history
+            me = C.history
 
             source = me.stack[me.now + step]
 
             return unless source?
 
-            parent.$prompt.innerHTML = source
+            C.$prompt.innerHTML = source
 
-            parent.focusPrompt()
+            C.focusPrompt()
 
-            parent.autoComplete.clean()
+            C.autoComplete.clean()
 
             me.now += step;
 
         save : ->
-            parent = amCoffee
-            me     = parent.history
+            me = C.history
 
-            jsonString = JSON.stringify me.stack
-
-            localStorage.setItem 'stack_' + chrome.devtools.inspectedWindow.tabId, jsonString
+            C.storage 'stack_' + chrome.devtools.inspectedWindow.tabId, me.stack
 
         load : ->
-            parent = amCoffee
-            me     = parent.history
+            me = C.history
 
-            jsonString = localStorage.getItem 'stack_' + chrome.devtools.inspectedWindow.tabId
+            stack = C.storage 'stack_' + chrome.devtools.inspectedWindow.tabId
+            return unless stack
 
-            return unless jsonString
-
-            me.stack = JSON.parse jsonString
+            me.stack = stack
             me.now   = me.stack.length
+
+    tips :
+        init : ->
+            me = C.tips
+
+            $tips = document.getElementsByClassName 'tips'
+
+            tips = C.storage('tips') || {}
+
+            for $tip in $tips
+                name = $tip.getAttribute 'name'
+
+                if tips[name]
+                    $tip.remove()
+                    continue
+
+                $tip.classList.add 'active'
+                $tip.addEventListener 'click', me.hide
+
+        hide : ->
+            name = this.getAttribute 'name'
+
+            this.remove()
+
+            tips = C.storage('tips') || {}
+            tips[name] = true
+            C.storage 'tips', tips

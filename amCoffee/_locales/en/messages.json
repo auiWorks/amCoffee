@@ -1,10 +1,20 @@
 {
-    "appName": {
-        "message": "amCoffee",
-        "description": "The title of the application, displayed in the web store."
+    "appName" : {
+        "message"     : "amCoffee",
+        "description" : "The title of the application, displayed in the web store."
     },
-    "appDesc": {
-        "message": "A CoffeeScript version of the Chrome Console.", 
-        "description":"The description of the application, displayed in the web store."
+    "appDesc" : {
+        "message"     : "A CoffeeScript version of the Chrome Console.", 
+        "description" : "The description of the application, displayed in the web store."
+    },
+    "settings" : {
+        "message"     : "Settings"
+    },
+    "settings_autoComplete_aggressive" : {
+        "message"     : "Aggressive autocomplete"
+    },
+    "tips_settings" : {
+        "message"     : "Customize?",
+        "description" : "Tips of settings."
     }
 }

@@ -1,8 +1,17 @@
 {
-    "appName": {
-        "message": "amCoffee"
+    "appName" : {
+        "message" : "amCoffee"
     },
-    "appDesc": {
-        "message": "CoffeeScript バージョンの Chrome Console。"
+    "appDesc" : {
+        "message" : "CoffeeScript バージョンの Chrome Console。"
+    },
+    "settings" : {
+        "message" : "設定"
+    },
+    "settings_autoComplete_aggressive" : {
+        "message" : "積極的な自動補完"
+    },
+    "tips_settings" : {
+        "message" : "カスタマイズ？"
     }
 }

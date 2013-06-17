@@ -11,6 +11,7 @@
 
     "version"                : "1.0.0",
     "minimum_chrome_version" : "18",
-    
-    "devtools_page" : "devtools.html"
+
+    "devtools_page" : "devtools.html",
+    "options_page"  : "settings.html"
 }
