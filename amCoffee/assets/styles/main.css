@@ -157,3 +157,30 @@ item.val {
 #autoComplete > li:hover {
     border-color: #CCC;
 }
+
+.tips {
+    display: none;
+    position: absolute;
+    padding: .5em 1em;
+    color: #FFF;
+    background: rgba(0,0,0,0.75);
+}
+.tips::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    margin-left: -6px;
+    width: 0;
+    height: 0;
+    border: transparent solid;
+    border-width: 6px 6px 0 6px;
+    border-top-color: rgba(0,0,0,.75);
+}
+.tips.active {
+    display: block;
+}
+.tips[name="settings"] {
+    left: 61px;
+    bottom: 10px;
+}

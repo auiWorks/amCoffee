@@ -1,8 +1,17 @@
 {
-    "appName": {
-        "message": "amCoffee"
+    "appName" : {
+        "message" : "amCoffee"
     },
-    "appDesc": {
-        "message": "A CoffeeScript version of the Chrome Console."
+    "appDesc" : {
+        "message" : "A CoffeeScript version of the Chrome Console."
+    },
+    "settings" : {
+        "message" : "Settings"
+    },
+    "settings_autoComplete_aggressive" : {
+        "message" : "Aggressive autocomplete"
+    },
+    "tips_settings" : {
+        "message" : "Customize?"
     }
 }
