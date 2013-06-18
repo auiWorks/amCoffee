@@ -124,6 +124,41 @@ item.val {
     vertical-align: top;
 }
 
+item.node {
+    color: #999;
+}
+
+item.tag {
+    color: #881280;
+}
+item.tag::before {
+    margin-right: -.5em;
+    content: '<';
+}
+item.tag::after {
+    content: '>';
+}
+item.tag-name,
+item.tag-attribute {
+    margin-left: .5em;
+}
+item.tag-attribute-name {
+    color: #994500;
+}
+item.tag-attribute-value {
+    color: #1A1AA6;
+}
+item.tag-attribute-value::before,
+item.tag-attribute-value::after {
+    color: #881280;
+}
+item.tag-attribute-value::before {
+    content: '="';
+}
+item.tag-attribute-value::after {
+    content: '"';
+}
+
 #promptLine {
     position: relative;
     clear: right;
@@ -160,7 +195,7 @@ item.val {
 
 .tips {
     display: none;
-    position: absolute;
+    position: fixed;
     padding: .5em 1em;
     color: #FFF;
     background: rgba(0,0,0,0.75);
