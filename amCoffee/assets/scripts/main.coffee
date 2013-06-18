@@ -23,7 +23,13 @@ C =
         C.$prompt       = document.getElementById 'prompt'
         C.$autoComplete = document.getElementById 'autoComplete'
 
-        C.console.init()
+        # inject amCoffee object into inspected window
+        chrome.devtools.inspectedWindow.eval """
+            if (window.__amCoffee__) return;
+            window.__amCoffee__ = {
+                process : #{C.process.toString()}
+            };
+        """, C.console.init
 
         document.body.addEventListener 'click', (e) ->
             C.focusPrompt e
@@ -274,38 +280,38 @@ C =
         init : ->
             me = C.console
 
-            script = """(function(){
-                if (window.__amCoffee_consoleStack) return;
-                window.__amCoffee_consoleStack = [];
-                ['log', 'warn', 'error', 'dir', 'info'].forEach(function (fn) {
-                    var old = console[fn];
-                    console[fn] = function () {
-                        old && old.apply(console, arguments);
-                        for (var i in arguments) {
-                            window.__amCoffee_consoleStack.push([fn, arguments[i]]);
-                        }
-                    };
-                });
-            })()"""
+            script = ->
+                return if window.__amCoffee__.consoleStack
+                window.__amCoffee__.consoleStack = []
+                ['log', 'warn', 'error', 'dir', 'info'].forEach (fn) ->
+                    old = console[fn]
+                    console[fn] = ->
+                        old.apply console, arguments if old
+                        for argument in arguments
+                            window.__amCoffee__.consoleStack.push [fn, argument]
+                        return
 
-            chrome.devtools.inspectedWindow.eval script
+            chrome.devtools.inspectedWindow.eval "(#{script.toString()})()"
 
         retrieve : (callback) ->
             me = C.console
 
-            script = """(function(){
-                var ret = window.__amCoffee_consoleStack;
-                window.__amCoffee_consoleStack = [];
-                return ret;
-            })()"""
+            script = ->
+                consoleStack = window.__amCoffee__.consoleStack
+                window.__amCoffee__.consoleStack = []
+                ret = []
+                ret.push [item[0], window.__amCoffee__.process item[1]] for item in consoleStack
+                return ret
 
-            chrome.devtools.inspectedWindow.eval script, (datas, isException) ->
+            chrome.devtools.inspectedWindow.eval "(#{script.toString()})()", (datas, isException) ->
                 if isException
-                    C.print 'err', datas
+                    C.print
+                        type  : 'err'
+                        value : isException.value
                     return
 
                 for data in datas
-                    C.print typeof data[1], data[1],
+                    C.print data[1],
                         printType : data[0]
 
                 callback() if callback
@@ -329,11 +335,15 @@ C =
             chrome.devtools.inspectedWindow.eval compiled, (data, isException) ->
                 C.console.retrieve ->
                     if isException
-                        C.print 'err', data
+                        C.print
+                            type  : 'err'
+                            value : isException.value
                     else
-                        C.print data.type, data.result
+                        C.print data
         catch err
-            C.print 'err', err.message
+            C.print
+                type  : 'err'
+                value : err.message
 
     compile : (source) ->
         # warp source in a function so it always returns a value
@@ -342,24 +352,55 @@ C =
         source = "return (->\n#{source}\n)()"
 
         compiled = CoffeeScript.compile source
-        # process the returned value
-        compiled = """(function () {
-            var result = #{compiled};
-            var type   = typeof result;
 
-            if (typeof result === 'function') {
-                result = result.toString();
-            }
-
-            return {
-                type   : type,
-                result : result
-            };
+        compiled = """(function(){
+            var value = #{compiled};
+            return window.__amCoffee__.process(value);
         })();"""
 
-    print : (type, result, options) ->
+    # process the returned value in inspected window's context
+    process : (value) ->
+        type = typeof value;
+
+        # is function
+        if type is 'function'
+            value = value.toString()
+
+        # is node
+        else if value && value.nodeType
+            if value.nodeType is Node.ELEMENT_NODE
+                type  = 'tag'
+                attrs = value.attributes
+                value =
+                    tagName    : value.tagName.toLowerCase()
+                    attributes : {}
+                value.attributes[attr.name] = attr.value for attr in attrs
+
+            else
+                type  = 'node'
+                value = value.nodeName.toLowerCase()
+
+        # is array
+        else if Array.isArray value
+            type  = 'array'
+            ret   = []
+            ret.push arguments.callee _value for _value in value
+            value = ret
+
+        # is object
+        else if type is 'object'
+            ret      = {}
+            ret[key] = arguments.callee _value for key, _value of value
+            value    = ret
+
+        return {
+            type  : type
+            value : value
+        }
+
+    print : (result, options) ->
         $outputResult = document.createElement 'LINE'
-        $outputResult.appendChild C.impl type, result
+        $outputResult.appendChild C.impl result
 
         if options
             $outputResult.className += " #{options.printType}" if options.printType
@@ -369,27 +410,27 @@ C =
         setTimeout ->
             C.$prompt.focus()
 
-    impl : (type, result) ->
+    impl : (result) ->
         $output = document.createElement 'ITEM'
 
-        if Array.isArray result
+        if result.type is 'array'
             $output.className = 'array'
 
-            for val in result
+            for _value in result.value
                 $objectElement           = document.createElement 'ITEM'
                 $objectElement.className = 'objectElement'
 
                 $val           = document.createElement 'ITEM'
                 $val.className = 'val'
-                $val.appendChild C.impl typeof val, val
+                $val.appendChild C.impl _value
                 $objectElement.appendChild $val
 
                 $output.appendChild $objectElement
 
-        else if type is 'object'
+        else if result.type is 'object'
             $output.className = 'object'
 
-            for key, val of result
+            for key, _value of result.value
                 $objectElement           = document.createElement 'ITEM'
                 $objectElement.className = 'objectElement'
 
@@ -400,14 +441,54 @@ C =
 
                 $val           = document.createElement 'ITEM'
                 $val.className = 'val'
-                $val.appendChild C.impl typeof val, val
+                $val.appendChild C.impl _value
                 $objectElement.appendChild $val
 
                 $output.appendChild $objectElement
 
+        else if result.type is 'tag'
+            $openTag           = document.createElement 'ITEM'
+            $openTag.className = 'tag'
+
+            $tagName           = document.createElement 'ITEM'
+            $tagName.className = 'tag-name'
+            $tagName.innerHTML = result.value.tagName
+            $openTag.appendChild $tagName
+
+            for name, _value of result.value.attributes
+                $attribute           = document.createElement 'ITEM'
+                $attribute.className = 'tag-attribute'
+
+                $attributeName           = document.createElement 'ITEM'
+                $attributeName.className = 'tag-attribute-name'
+                $attributeName.innerHTML = name
+                $attribute.appendChild $attributeName
+
+                unless _value is ''
+                    $attributeValue           = document.createElement 'ITEM'
+                    $attributeValue.className = 'tag-attribute-value'
+                    $attributeValue.innerHTML = _value
+                    $attribute.appendChild $attributeValue
+
+                $openTag.appendChild $attribute
+
+            $bogus           = document.createElement 'ITEM'
+            $bogus.innerHTML = '…'
+
+            $closeTag           = document.createElement 'ITEM'
+            $closeTag.className = 'tag'
+
+            $tagNameClose           = $tagName.cloneNode()
+            $tagNameClose.innerText = "/#{result.value.tagName}"
+            $closeTag.appendChild $tagNameClose
+
+            $output.appendChild $openTag
+            $output.appendChild $bogus
+            $output.appendChild $closeTag
+
         else 
-            $output.className = type
-            $output.innerText = if type is 'undefined' then 'undefined' else result
+            $output.className = result.type
+            $output.innerText = if result.type is 'undefined' then 'undefined' else result.value
 
         return $output
 
