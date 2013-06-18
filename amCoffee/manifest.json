@@ -13,5 +13,7 @@
     "minimum_chrome_version" : "25",
 
     "devtools_page" : "devtools.html",
-    "options_page"  : "settings.html"
+    "options_page"  : "settings.html",
+
+    "content_security_policy" : "script-src 'self' https://apis.google.com https://platform.twitter.com; object-src 'self'"
 }

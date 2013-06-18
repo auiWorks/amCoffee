@@ -67,6 +67,14 @@ h2 {
     float: right;
 }
 
+.share {
+    padding-top: 50px;
+    text-align: center;
+}
+.share > * {
+    padding: 0 10px !important;
+}
+
 .logo {
     padding-top: 100px;
     height: 75px;
