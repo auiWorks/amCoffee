@@ -80,7 +80,7 @@ C =
         C.$prompt.addEventListener 'input', C.autoComplete.listener
         C.autoComplete.listener()
 
-        C.$prompt.focus()
+        C.focusPrompt()
 
         C.history.load()
 
@@ -90,6 +90,9 @@ C =
         C.$prompt.focus()
 
         return if e and e.target is C.$prompt
+
+        C.$prompt.scrollIntoView()
+
         return if C.$prompt.innerText.trim() is ''
 
         # Set cursor to last
@@ -408,7 +411,7 @@ C =
         C.$outputs.appendChild $outputResult
 
         setTimeout ->
-            C.$prompt.focus()
+            C.focusPrompt()
 
     impl : (result) ->
         $output = document.createElement 'ITEM'
