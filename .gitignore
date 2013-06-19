@@ -1,5 +1,6 @@
 *.js
 !*.min.js
+*.map
 
 .DS_Store
 Thumbs.db
