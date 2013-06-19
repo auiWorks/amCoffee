@@ -32,7 +32,7 @@ C =
         isOverride = (e) ->
             override   = ([9, 38, 40].indexOf(e.keyCode) isnt -1)
             override ||= ([13].indexOf(e.keyCode) isnt -1 and ! e.shiftKey)
-            override ||= ([74, 75, 76, 85].indexOf(e.keyCode) isnt -1 and e.ctrlKey)
+            override ||= ([74, 75, 76, 82, 85].indexOf(e.keyCode) isnt -1 and e.ctrlKey)
 
         C.$prompt.addEventListener 'keydown', (e) ->
             return unless isOverride e
@@ -68,6 +68,9 @@ C =
             # ctrl+l
             else if e.keyCode is 76
                 C.clearScreen()
+            # ctrl+r
+            else if e.keyCode is 82
+                chrome.devtools.inspectedWindow.reload()
             # ctrl+u
             else if e.keyCode is 85
                 C.clearPrompt()
