@@ -13,7 +13,7 @@ C =
         return obj
 
     setting : (key, value) ->
-        setting = C.storage('setting') || {}
+        setting = C.storage('setting') or {}
 
         if value isnt undefined
             setting[key] = value

@@ -14,7 +14,7 @@ C =
             for pair in pairs
                 parts = pair.split ':'
 
-                if parts[0] is '' || parts[1] is null
+                if parts[0] is '' or parts[1] is null
                     console.error 'i18n: Skiped:', pair
                     continue
 

@@ -13,7 +13,7 @@ C =
         return obj
 
     setting : (key) ->
-        setting = C.storage('setting') || {}
+        setting = C.storage('setting') or {}
 
         return setting[key]
 
@@ -31,8 +31,8 @@ C =
 
         isOverride = (e) ->
             override   = ([9, 38, 40].indexOf(e.keyCode) isnt -1)
-            override ||= ([13].indexOf(e.keyCode) isnt -1 and ! e.shiftKey)
-            override ||= ([74, 75, 76, 82, 85].indexOf(e.keyCode) isnt -1 and e.ctrlKey)
+            override or= ([13].indexOf(e.keyCode) isnt -1 and not e.shiftKey)
+            override or= ([74, 75, 76, 82, 85].indexOf(e.keyCode) isnt -1 and e.ctrlKey)
 
         C.$prompt.addEventListener 'keydown', (e) ->
             return unless isOverride e
@@ -45,7 +45,7 @@ C =
             else if e.keyCode is 9 and e.shiftKey
                 C.autoComplete.nav -1
             # tab
-            else if e.keyCode is 9 and ! e.shiftKey
+            else if e.keyCode is 9 and not e.shiftKey
                 C.autoComplete.nav +1
             # up
             else if e.keyCode is 38
@@ -377,7 +377,7 @@ C =
             value = value.toString()
 
         # is node
-        else if value && value.nodeType
+        else if value and value.nodeType
             if value.nodeType is Node.ELEMENT_NODE
                 type  = 'tag'
                 attrs = value.attributes
@@ -558,7 +558,7 @@ C =
 
             $tips = document.getElementsByClassName 'tips'
 
-            tips = C.storage('tips') || {}
+            tips = C.storage('tips') or {}
 
             for $tip in $tips
                 name = $tip.getAttribute 'name'
@@ -575,6 +575,6 @@ C =
 
             this.remove()
 
-            tips = C.storage('tips') || {}
+            tips = C.storage('tips') or {}
             tips[name] = true
             C.storage 'tips', tips
