@@ -12,13 +12,13 @@ C =
             pairs = attrs.replace(/\s/g, '').split ','
 
             for pair in pairs
-                parts = pair.split ':'
+                [name, key] = pair.split ':'
 
-                if parts[0] is '' or parts[1] is null
+                if name is '' or key is null
                     console.error 'i18n: Skiped:', pair
                     continue
 
-                $ele.setAttribute parts[0], chrome.i18n.getMessage parts[1]
+                $ele.setAttribute name, chrome.i18n.getMessage key
 
     init : ->
         C.attrNames = Object.keys C.handlers
