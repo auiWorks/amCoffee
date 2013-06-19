@@ -282,7 +282,7 @@ C =
             return if matches[0] isnt '.' and matches[1] is ''
 
             C.$prompt.innerText = (sourceOriginal.substr 0, sourceOriginal.length - matches[1].length) \
-                                     + pattern
+                                  + pattern
 
             C.focusPrompt()
 
