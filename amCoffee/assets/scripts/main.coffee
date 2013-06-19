@@ -23,13 +23,8 @@ C =
         C.$prompt       = document.getElementById 'prompt'
         C.$autoComplete = document.getElementById 'autoComplete'
 
-        # inject amCoffee object into inspected window
-        chrome.devtools.inspectedWindow.eval """
-            if (window.__amCoffee__) return;
-            window.__amCoffee__ = {
-                process : #{C.process.toString()}
-            };
-        """, C.console.init
+        chrome.devtools.network.onNavigated.addListener C.inject
+        C.inject()
 
         document.body.addEventListener 'click', (e) ->
             C.focusPrompt e
@@ -85,6 +80,15 @@ C =
         C.history.load()
 
         C.tips.init()
+
+    # inject amCoffee object into inspected window
+    inject : ->
+        chrome.devtools.inspectedWindow.eval """
+            if (window.__amCoffee__) return;
+            window.__amCoffee__ = {
+                process : #{C.process.toString()}
+            };
+        """, C.console.init
 
     focusPrompt : (e) ->
         C.$prompt.focus()
