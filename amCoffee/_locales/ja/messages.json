@@ -5,6 +5,9 @@
     "appDesc" : {
         "message" : "CoffeeScript バージョンの Chrome Console。"
     },
+    "github_fork" : {
+        "message" : "Fork me on GitHub"
+    },
     "settings" : {
         "message" : "設定"
     },

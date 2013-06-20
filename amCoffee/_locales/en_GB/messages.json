@@ -5,6 +5,9 @@
     "appDesc" : {
         "message" : "A CoffeeScript version of the Chrome Console."
     },
+    "github_fork" : {
+        "message" : "Fork me on GitHub"
+    },
     "settings" : {
         "message" : "Settings"
     },

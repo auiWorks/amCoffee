@@ -7,6 +7,9 @@
         "message"     : "A CoffeeScript version of the Chrome Console.", 
         "description" : "The description of the application, displayed in the web store."
     },
+    "github_fork" : {
+        "message"     : "Fork me on GitHub"
+    },
     "settings" : {
         "message"     : "Settings"
     },

@@ -81,3 +81,26 @@ h2 {
     background: url(../images/logo.png) no-repeat center bottom;
     background-size: auto 75px;
 }
+
+.github {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 134px;
+    height: 134px;
+}
+.github::after {
+    content: '__MSG_github_fork__';
+    position: absolute;
+    right: -45px;
+    top: 42px;
+    text-align: center;
+    color: #FFF;
+    width: 200px;
+    line-height: 30px;
+    background: linear-gradient(to bottom, #333, #000);
+    box-shadow: inset 0 0 0 3px #666;
+    -webkit-transform: rotateZ(45deg);
+}
