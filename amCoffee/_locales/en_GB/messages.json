@@ -14,6 +14,9 @@
     "settings_autoComplete_aggressive" : {
         "message" : "Aggressive autocomplete"
     },
+    "tips_assignVariables" : {
+        "message" : "Use 'window.name' if you want to assign variables to window."
+    },
     "tips_settings" : {
         "message" : "Customize?"
     }

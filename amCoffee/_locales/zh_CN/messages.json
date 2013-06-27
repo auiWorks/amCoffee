@@ -14,6 +14,9 @@
     "settings_autoComplete_aggressive" : {
         "message" : "积极的自动补全"
     },
+    "tips_assignVariables" : {
+        "message" : "请使用 window.name 来向 window 注册变量。",
+    },
     "tips_settings" : {
         "message" : "个性化？"
     }

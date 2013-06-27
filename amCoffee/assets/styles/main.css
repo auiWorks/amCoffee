@@ -209,11 +209,24 @@ item.tag-attribute-value::after {
     width: 0;
     height: 0;
     border: transparent solid;
-    border-width: 6px 6px 0 6px;
+    border-width: 6px 6px 0;
     border-top-color: rgba(0,0,0,.75);
+}
+.tips.topleft:after {
+    left: 0;
+    margin-left: 0;
+    top: -6px;
+    border: transparent solid;
+    border-width: 0 6px 6px;
+    border-bottom-color: rgba(0,0,0,.75);
 }
 .tips.active {
     display: block;
+}
+.tips[name="assignVariables"] {
+    position: absolute;
+    left: 0;
+    bottom: -3em;
 }
 .tips[name="settings"] {
     left: 61px;

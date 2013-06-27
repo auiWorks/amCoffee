@@ -14,6 +14,9 @@
     "settings_autoComplete_aggressive" : {
         "message" : "積極的な自動補完"
     },
+    "tips_assignVariables" : {
+        "message" : "window 変数への割り当ては window.name を使ってください。"
+    },
     "tips_settings" : {
         "message" : "カスタマイズ？"
     }
