@@ -29,8 +29,3 @@ Packaging
 
 Here is a packager:  
 https://github.com/auiWorks/util-appPackager
-
-License
--------
-
-MIT: http://rem.mit-license.org
