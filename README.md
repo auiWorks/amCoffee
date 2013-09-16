@@ -23,9 +23,3 @@ Usage
 with [CoffeeScript](http://coffeescript.org/) compiler.
 
 2. Import it into Chrome. You know how, right?
-
-Packaging
----------
-
-Here is a packager:  
-https://github.com/auiWorks/util-appPackager
