@@ -1,4 +1,4 @@
-amCoffee
+<img height="150" src="https://raw.github.com/auiWorks/amCoffee/master/amCoffee/assets/images/logo.png" />
 ========
 
 A CoffeeScript version of the Chrome Console.
