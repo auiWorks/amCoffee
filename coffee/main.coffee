@@ -222,7 +222,7 @@ C =
             me = C.autoComplete
 
             me.ing = true;
-            
+
             C.$autoComplete.style.display = 'block'
 
         hide : ->
@@ -496,7 +496,7 @@ C =
             $output.appendChild $bogus
             $output.appendChild $closeTag
 
-        else 
+        else
             $output.className = result.type
             $output.innerText = if result.type is 'undefined' then 'undefined' else result.value
 
@@ -561,6 +561,8 @@ C =
             tips = C.storage('tips') or {}
 
             for $tip in $tips
+                continue unless $tip
+
                 name = $tip.getAttribute 'name'
 
                 if tips[name]
