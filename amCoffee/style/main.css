@@ -175,11 +175,19 @@ item.tag-attribute-value::after {
 }
 
 #autoComplete {
+    overflow-y: scroll;
     position: absolute;
     color: #000;
     background: #FFF;
     border: #AAA 1px solid;
-    border-radius: 0 5px 5px 5px;
+    border-radius: 5px;
+}
+#autoComplete.below {
+    border-top-left-radius: 0;
+}
+#autoComplete.above {
+    bottom: 100%;
+    border-bottom-left-radius: 0;
 }
 #autoComplete > li {
     padding: 0 3px;
