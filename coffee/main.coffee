@@ -223,6 +223,20 @@ C =
 
             me.ing = true;
 
+            clientHeight = document.body.clientHeight
+            scrollHeight = document.body.scrollHeight
+            scrollTop    = document.body.scrollTop
+
+            offsetHeight = C.$promptLine.offsetHeight
+            offsetTop    = C.$promptLine.offsetTop
+
+            if ( offsetTop - scrollTop ) < ( clientHeight / 2 )
+                C.$autoComplete.className       = 'below'
+                C.$autoComplete.style.maxHeight = ( clientHeight - offsetTop - offsetHeight - 10 ) + 'px'
+            else
+                C.$autoComplete.className       = 'above'
+                C.$autoComplete.style.maxHeight = ( offsetTop - scrollTop - 10 ) + 'px'
+
             C.$autoComplete.style.display = 'block'
 
         hide : ->
@@ -268,6 +282,8 @@ C =
             if $to
                 $now.className = '' if $now
                 $to.className = 'active'
+
+                $to.scrollIntoViewIfNeeded false
 
                 me.fill $to.innerHTML
 
