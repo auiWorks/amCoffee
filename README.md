@@ -19,7 +19,6 @@ Use it the way you use the original console, but with CoffeeScript!
 Usage
 -----
 
-1. Compile all `.coffee` into `.js` using default compile options
-with [CoffeeScript](http://coffeescript.org/) compiler.
-
-2. Import it into Chrome. You know how, right?
+1. npm install
+2. grunt
+3. Import "amCoffee" folder into Chrome.
