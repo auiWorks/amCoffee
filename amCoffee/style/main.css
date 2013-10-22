@@ -34,7 +34,7 @@ line.prompt::after {
     width: 10px;
     height: 10px;
     white-space: pre-wrap;
-    background: url(../images/icon_arrow.svg) no-repeat;
+    background: url(../image/icon_arrow.svg) no-repeat;
     background-size: 10px auto;
 }
 line.prompt {
@@ -48,7 +48,7 @@ line.error::after {
     width: 10px;
     height: 10px;
     white-space: pre-wrap;
-    background: url(../images/icon_error.svg) no-repeat;
+    background: url(../image/icon_error.svg) no-repeat;
     background-size: 10px auto;
 }
 line.warn::after {
@@ -59,7 +59,7 @@ line.warn::after {
     width: 10px;
     height: 10px;
     white-space: pre-wrap;
-    background: url(../images/icon_warn.svg) no-repeat;
+    background: url(../image/icon_warn.svg) no-repeat;
     background-size: 10px auto;
 }
 
@@ -165,7 +165,7 @@ item.tag-attribute-value::after {
     min-height: 1.5em;
 }
 #promptLine::after {
-    background-image: url(../images/icon_arrow_active.svg);
+    background-image: url(../image/icon_arrow_active.svg);
 }
 
 #prompt {

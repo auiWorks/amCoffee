@@ -1,9 +1,9 @@
-<img height="150" src="https://raw.github.com/auiWorks/amCoffee/master/amCoffee/assets/images/logo.png" />
+<img height="150" src="https://raw.github.com/auiWorks/amCoffee/master/amCoffee/image/logo.png" />
 ========
 
 A CoffeeScript version of the Chrome Console.
 
-Run as Chrome Extension:  
+Run as Chrome Extension:
 https://chrome.google.com/webstore/detail/amcoffee/eohnbihebhopoapemdbbodaiaagpogik
 
 Features

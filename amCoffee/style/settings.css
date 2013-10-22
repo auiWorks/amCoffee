@@ -78,7 +78,7 @@ h2 {
 .logo {
     padding-top: 100px;
     height: 75px;
-    background: url(../images/logo.png) no-repeat center bottom;
+    background: url(../image/logo.png) no-repeat center bottom;
     background-size: auto 75px;
 }
 
