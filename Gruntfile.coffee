@@ -53,7 +53,6 @@ module.exports = (grunt) ->
                 ]
                 tasks : [
                     'coffee'
-                    'uglify'
                 ]
 
     grunt.loadNpmTasks name for name in [
@@ -68,7 +67,6 @@ module.exports = (grunt) ->
         'clean:all'
         'copy'
         'coffee'
-        'uglify'
     ]
 
     grunt.registerTask 'release', [
