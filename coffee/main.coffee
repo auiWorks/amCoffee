@@ -30,12 +30,13 @@ C =
             C.focusPrompt e
 
         isOverride = (e) ->
-            override   = ([9, 38, 40].indexOf(e.keyCode) isnt -1)
+            override   = ([9, 38, 39, 40].indexOf(e.keyCode) isnt -1)
             override or= ([13].indexOf(e.keyCode) isnt -1 and not e.shiftKey)
             override or= ([74, 75, 76, 82, 85].indexOf(e.keyCode) isnt -1 and e.ctrlKey)
 
         C.$prompt.addEventListener 'keydown', (e) ->
             return unless isOverride e
+            return if e.keyCode is 39 and not C.autoComplete.ing
             e.preventDefault()
 
             # enter
@@ -44,8 +45,8 @@ C =
             # tab
             else if e.keyCode is 9 and e.shiftKey
                 C.autoComplete.nav -1
-            # tab
-            else if e.keyCode is 9 and not e.shiftKey
+            # shift+tab or right
+            else if (e.keyCode is 9 and not e.shiftKey) or (e.keyCode is 39)
                 C.autoComplete.nav +1
             # up
             else if e.keyCode is 38
