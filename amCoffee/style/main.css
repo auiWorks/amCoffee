@@ -13,6 +13,7 @@ body {
     line-height: 1.4em;
     font-family: Consolas, Lucida Console, monospace;
     box-sizing: border-box;
+    background-color: white;
 }
 input, textarea, pre {
     font-size: 12px;
