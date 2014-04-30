@@ -9,16 +9,16 @@ html, body {
 body {
     margin: 0;
     padding: 2px 0;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.4em;
-    font-family: Consolas, Lucida Console, monospace;
+    font-family: Menlo, Consolas, Lucida Console, monospace;
     box-sizing: border-box;
     background-color: white;
 }
 input, textarea, pre {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.4em;
-    font-family: Consolas, Lucida Console, monospace;
+    font-family: Menlo, Consolas, Lucida Console, monospace;
 }
 
 #settings {
@@ -224,18 +224,20 @@ item.tag-attribute-value::after {
 .tips::after {
     content: '';
     position: absolute;
-    left: 50%;
-    bottom: -6px;
-    margin-left: -6px;
     width: 0;
     height: 0;
-    border: transparent solid;
-    border-width: 6px 6px 0;
-    border-top-color: rgba(0,0,0,.75);
 }
 .tips.topleft:after {
     left: 0;
     margin-left: 0;
+    top: -6px;
+    border: transparent solid;
+    border-width: 0 6px 6px;
+    border-bottom-color: rgba(0,0,0,.75);
+}
+.tips.topright:after {
+    right: 0;
+    margin-right: 0;
     top: -6px;
     border: transparent solid;
     border-width: 0 6px 6px;
@@ -250,6 +252,6 @@ item.tag-attribute-value::after {
     bottom: -3em;
 }
 .tips[name="settings"] {
-    left: 61px;
-    bottom: 10px;
+    right: 10px;
+    top: 32px;
 }

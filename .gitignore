@@ -2,6 +2,7 @@
 Thumbs.db
 Desktop.ini
 
+.tmp
 node_modules
 
-amCoffee/script
+/dist/

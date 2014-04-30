@@ -1,78 +1,100 @@
 module.exports = (grunt) ->
+    require('load-grunt-tasks')(grunt)
+
     grunt.initConfig
         pkg : grunt.file.readJSON 'package.json'
 
+        path :
+            src  : 'src'
+            dist : 'dist'
+
+        clean :
+            dist :
+                dot : true
+                src : [
+                    '<%= path.dist %>'
+                ]
+
         copy :
-            script :
+            static :
                 expand  : true
-                cwd     : 'coffee/'
-                src     : [ '**/*.js' ]
-                dest    : 'amCoffee/script/'
+                cwd     : '<%= path.src %>'
+                dest    : '<%= path.dist %>'
+                src     : [
+                    'manifest.json'
+                    '*.html'
+                    '{_locales,image,css,js}/**/*.*'
+                ]
+
+        imagemin :
+            options :
+                pngquant : true
+
+            dist :
+                expand : true
+                cwd    : '<%= path.src %>/image'
+                dest   : '<%= path.dist %>/image'
+                src    : [ '**/*.{png,jpg,gif}' ]
 
         coffee :
             dist :
-                options :
-                    sourceMap : true
-
                 expand  : true
-                cwd     : 'coffee/'
+                cwd     : '<%= path.src %>/coffee'
+                dest    : '<%= path.dist %>/js'
                 src     : [ '**/*.coffee' ]
-                dest    : 'amCoffee/script/'
                 ext     : '.js'
+                extDot  : 'last'
+
+        concurrent :
+            dist : [
+                'copy:static'
+                'coffee'
+            ]
 
         uglify :
             dist :
-                expand  : true
-                cwd     : 'amCoffee/script/'
-                src     : [ '**/*.js', '!**/*.min.js' ]
-                dest    : 'amCoffee/script/'
+                files : [{
+                    expand  : true
+                    cwd     : '<%= path.dist %>/js'
+                    dest    : '<%= path.dist %>/js'
+                    src     : [ '**/*.js' ]
+                    ext     : '.js'
+                    extDot  : 'last'
+                }]
 
-        clean :
-            all :
-                src : [
-                    'amCoffee/script'
-                ]
-
-            release :
-                src : [
-                    'amCoffee/**/*.map'
-                ]
+        cssmin :
+            dist :
+                files : [{
+                    expand  : true
+                    cwd     : '<%= path.dist %>/css'
+                    dest    : '<%= path.dist %>/css'
+                    src     : [ '**/*.css' ]
+                    ext     : '.css'
+                    extDot  : 'last'
+                }]
 
         watch :
-            copyScript :
+            copyStatic :
                 files : [
-                    'coffee/**/*.js'
+                    '<%= path.src %>/manifest.json'
+                    '<%= path.src %>/*.html'
+                    '<%= path.src %>/{_locales,image,css,js}/**/*.*'
                 ]
-                tasks : [
-                    'copy:script'
-                ]
+                tasks : [ 'copy:static' ]
 
             coffee :
-                files : [
-                    'coffee/**/*.coffee'
-                ]
-                tasks : [
-                    'coffee'
-                ]
-
-    grunt.loadNpmTasks name for name in [
-        'grunt-contrib-coffee'
-        'grunt-contrib-uglify'
-        'grunt-contrib-watch'
-        'grunt-contrib-clean'
-        'grunt-contrib-copy'
-    ]
+                files : [ '<%= path.src %>/coffee/**/*.coffee' ]
+                tasks : [ 'coffee' ]
 
     grunt.registerTask 'default', [
-        'clean:all'
-        'copy'
-        'coffee'
+        'clean:dist'
+        'concurrent:dist'
     ]
 
     grunt.registerTask 'release', [
-        'clean:all'
-        'copy'
-        'coffee'
+        'clean:dist'
+        'concurrent:dist'
+        'imagemin'
         'uglify'
-        'clean:release'
+        'cssmin'
     ]
