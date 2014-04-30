@@ -8,10 +8,10 @@
     "github_fork" : {
         "message" : "Fork me on GitHub"
     },
-    "settings" : {
+    "options" : {
         "message" : "設定"
     },
-    "settings_autoComplete_aggressive" : {
+    "options_autoComplete_aggressive" : {
         "message" : "積極的な自動補完"
     },
     "options_rate" : {
@@ -20,7 +20,7 @@
     "tips_assignVariables" : {
         "message" : "window 変数への割り当ては window.name を使ってください。"
     },
-    "tips_settings" : {
+    "tips_options" : {
         "message" : "カスタマイズ？"
     }
 }

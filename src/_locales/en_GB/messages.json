@@ -8,10 +8,10 @@
     "github_fork" : {
         "message" : "Fork me on GitHub"
     },
-    "settings" : {
-        "message" : "Settings"
+    "options" : {
+        "message" : "Options"
     },
-    "settings_autoComplete_aggressive" : {
+    "options_autoComplete_aggressive" : {
         "message" : "Aggressive autocomplete"
     },
     "options_rate" : {
@@ -20,7 +20,7 @@
     "tips_assignVariables" : {
         "message" : "Use 'window.name' if you want to assign variables to window."
     },
-    "tips_settings" : {
+    "tips_options" : {
         "message" : "Customize?"
     }
 }

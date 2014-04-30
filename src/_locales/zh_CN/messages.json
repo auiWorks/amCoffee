@@ -8,10 +8,10 @@
     "github_fork" : {
         "message" : "Fork me on GitHub"
     },
-    "settings" : {
+    "options" : {
         "message" : "设置"
     },
-    "settings_autoComplete_aggressive" : {
+    "options_autoComplete_aggressive" : {
         "message" : "积极的自动补全"
     },
     "options_rate" : {
@@ -20,7 +20,7 @@
     "tips_assignVariables" : {
         "message" : "请使用 window.name 来向 window 注册变量。"
     },
-    "tips_settings" : {
+    "tips_options" : {
         "message" : "个性化？"
     }
 }
