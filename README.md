@@ -22,4 +22,4 @@ Usage
 1. gem install bourbon
 1. npm install
 1. grunt
-1. Import "amCoffee" folder into Chrome.
+1. Import "dist" folder into Chrome.
