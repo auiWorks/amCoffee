@@ -14,6 +14,9 @@
     "settings_autoComplete_aggressive" : {
         "message" : "积极的自动补全"
     },
+    "options_rate" : {
+        "message" : "Like me? Rate me!"
+    },
     "tips_assignVariables" : {
         "message" : "请使用 window.name 来向 window 注册变量。"
     },

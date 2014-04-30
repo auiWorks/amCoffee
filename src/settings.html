@@ -1,34 +1,48 @@
 <!doctype html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+<meta name="twitter:widgets:csp" content="on">
+
 <title i18n-content="settings"></title>
+
+<link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/settings.css">
-<script type="text/javascript" charset="utf-8" src="js/lib/i18n.js"></script>
-<script type="text/javascript" charset="utf-8" src="js/lib/share.js"></script>
-<script type="text/javascript" charset="utf-8" src="js/settings.js"></script>
+
 </head>
 <body>
 
 <div class="container">
 
-<h2 i18n-content="settings"></h2>
-<div class="item">
-    <input type="checkbox" name="autoComplete_aggressive" />
-    <div i18n-content="settings_autoComplete_aggressive"></div>
-</div>
+<div class="title" i18n-content="settings"></div>
+<ul class="item">
+    <li>
+        <input type="checkbox" name="autoComplete_aggressive">
+        <div i18n-content="settings_autoComplete_aggressive"></div>
+    </li>
+</ul>
 
-<div class="logo"></div>
+<div class="info">
+    <a href="http://amcoffee.auiworks.com">
+        <span class="logo"></span>
+        <span i18n-content="options_rate"></span>
+    </a>
+</div>
 
 <div class="share">
-    <div class="g-plusone" data-size="tall" data-href="https://chrome.google.com/webstore/detail/amcoffee/eohnbihebhopoapemdbbodaiaagpogik"></div>
-    <a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical" data-url="https://chrome.google.com/webstore/detail/amcoffee/eohnbihebhopoapemdbbodaiaagpogik" data-text="A CoffeeScript version of the Chrome Console." data-hashtags="amCoffee"></a>
-    <iframe id="fb-like" data-src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Famcoffee%2Feohnbihebhopoapemdbbodaiaagpogik&amp;send=false&amp;layout=box_count&amp;width=50&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=61" scrolling="no" frameborder="0" style="display:none; border:none; overflow:hidden; width:50px; height:61px;" allowTransparency="true"></iframe>
+    <div class="g-plusone" data-size="tall" data-href="http://amcoffee.auiworks.com"></div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical" data-url="http://amcoffee.auiworks.com" data-text="A CoffeeScript version of the Chrome Console." data-hashtags="amCoffee"></a>
+    <iframe id="fb-like" data-src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Famcoffee.auiworks.com&amp;send=false&amp;layout=box_count&amp;width=50&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=61" scrolling="no" frameborder="0" style="display:none; border:none; overflow:hidden; width:50px; height:61px;" allowTransparency="true"></iframe>
 </div>
 
 </div>
 
-<a href="https://github.com/auiWorks/amCoffee" target="_blank" class="github"></a>
+<a href="https://github.com/auiWorks/amCoffee" class="github"></a>
+
+<script type="text/javascript" charset="utf-8" src="js/lib/i18n.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/lib/share.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/settings.js"></script>
 
 </body>
 </html>

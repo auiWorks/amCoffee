@@ -1,6 +1,3 @@
-window.addEventListener 'load', ->
-    C.init()
-
 C =
     storage : (key, value) ->
         json = localStorage.getItem key
@@ -42,12 +39,12 @@ C =
             # enter
             if e.keyCode is 13
                 C.run()
-            # tab
-            else if e.keyCode is 9 and e.shiftKey
-                C.autoComplete.nav -1
-            # shift+tab or right
+            # tab or right
             else if (e.keyCode is 9 and not e.shiftKey) or (e.keyCode is 39)
                 C.autoComplete.nav +1
+            # shift+tab
+            else if e.keyCode is 9 and e.shiftKey
+                C.autoComplete.nav -1
             # up
             else if e.keyCode is 38
                 if C.autoComplete.ing
@@ -597,3 +594,6 @@ C =
             tips = C.storage('tips') or {}
             tips[name] = true
             C.storage 'tips', tips
+
+
+C.init()

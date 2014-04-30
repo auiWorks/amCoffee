@@ -1,0 +1,129 @@
+@import bourbon/bourbon
+
+$font-family      : "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, "微软雅黑", "宋体", sans-serif
+$font-family-code : Menlo, Consolas, "Lucida Console", monospace
+$font-color       : #000
+$font-color-gray  : #999
+$link-color       : #48f
+$link-color-hover : #00f
+
+$default-transition : .15s ease-out
+
+@import mixin
+
++font-face-woff('Waiting for the Sunrise', '../font/WaitingForTheSunrise')
+
+/* Basic */
+*
+    outline: none
+    -webkit-user-drag: none
+
+html
+    font-family: $font-family
+    font-size: 10px
+    line-height: 1.7
+    color: $font-color
+    background: #FFF
+
+a, a:link a:visited
+    color: $link-color
+    text-decoration: none
+    +transition(color $default-transition)
+
+a:active, a:hover
+    color: $link-color-hover
+
+h1, h2, h3, h4
+    margin: .5em 0
+    font-weight: bold
+h1
+    font-size: 2em
+h2
+    font-size: 1.5em
+h3
+    font-size: 1.25em
+h4
+    font-size: 1em
+
+fieldset
+    margin: 1em 0
+    padding: 0
+    border: none
+
+input[type="text"], textarea
+    +box-sizing(border-box)
+    display: block
+    padding: .5em 1em
+    line-height: 1.7
+    border: #eee 1px solid
+    +transition(border-color $default-transition)
+
+    +placeholder
+        color: $font-color-gray
+
+    &:hover, &:focus
+        border-color: shade(#eee, 10%)
+
+textarea
+    resize: vertical
+
+input[type="checkbox"]
+    +appearance(none)
+    width: 32px
+    height: 24px
+    background: #ccc
+    border-radius: 12px
+    +transition(background $default-transition)
+
+    &::after
+        content: ''
+        display: block
+        position: relative
+        margin: 1px
+        left: 0
+        width: 22px
+        height: 22px
+        background: #fff
+        border-radius: 11px
+        +transition(left $default-transition)
+
+    &:checked
+        background: $link-color
+
+        &::after
+            left: 8px
+
+input[type="radio"]
+    +appearance(none)
+    +box-sizing(border-box)
+    width: 24px
+    height: 24px
+    vertical-align: middle
+    background: #fff
+    border: #ccc 1px solid
+    border-radius: 12px
+    +transition(border $default-transition)
+
+    &:checked
+        border-width: 12px
+        border-color: $link-color
+
+    & + label
+        margin: 0 1em 0 .5em
+
+button
+    line-height: 1
+    padding: 1em 1.5em
+    background-color: #fff
+    border: tint($link-color, 50%) 1px solid
+    +transition(all $default-transition)
+
+    &:hover
+        color: #fff
+        background-color: $link-color
+        border-color: $link-color
+
+    &:active
+        color: #fff
+        background-color: $link-color-hover
+        border-color: $link-color-hover

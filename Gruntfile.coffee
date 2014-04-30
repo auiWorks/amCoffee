@@ -8,6 +8,10 @@ module.exports = (grunt) ->
             src  : 'src'
             dist : 'dist'
 
+        exec :
+            install :
+                cmd : 'bourbon install --path=<%= path.src %>/sass'
+
         clean :
             dist :
                 dot : true
@@ -23,7 +27,7 @@ module.exports = (grunt) ->
                 src     : [
                     'manifest.json'
                     '*.html'
-                    '{_locales,image,css,js}/**/*.*'
+                    '{_locales,image,font,css,js}/**/*.*'
                 ]
 
         imagemin :
@@ -45,10 +49,23 @@ module.exports = (grunt) ->
                 ext     : '.js'
                 extDot  : 'last'
 
+        sass :
+            dist :
+                options :
+                    unixNewlines : true
+
+                expand  : true
+                cwd     : '<%= path.src %>/sass'
+                dest    : '<%= path.dist %>/css'
+                src     : [ '**/*.sass', '!**/_*.sass' ]
+                ext     : '.css'
+                extDot  : 'last'
+
         concurrent :
             dist : [
                 'copy:static'
                 'coffee'
+                'sass'
             ]
 
         uglify :
@@ -78,7 +95,7 @@ module.exports = (grunt) ->
                 files : [
                     '<%= path.src %>/manifest.json'
                     '<%= path.src %>/*.html'
-                    '<%= path.src %>/{_locales,image,css,js}/**/*.*'
+                    '<%= path.src %>/{_locales,image,font,css,js}/**/*.*'
                 ]
                 tasks : [ 'copy:static' ]
 
@@ -86,12 +103,18 @@ module.exports = (grunt) ->
                 files : [ '<%= path.src %>/coffee/**/*.coffee' ]
                 tasks : [ 'coffee' ]
 
+            sass :
+                files : [ '<%= path.src %>/sass/**/*.sass' ]
+                tasks : [ 'sass' ]
+
     grunt.registerTask 'default', [
+        'exec:install'
         'clean:dist'
         'concurrent:dist'
     ]
 
     grunt.registerTask 'release', [
+        'exec:install'
         'clean:dist'
         'concurrent:dist'
         'imagemin'

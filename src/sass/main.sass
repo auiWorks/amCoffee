@@ -1,0 +1,215 @@
+@import base
+
+*
+    cursor: default
+
+html, body
+    height: 100%
+
+body
+    padding: 2px 0
+    font-size: 11px
+    line-height: 1.4em
+    font-family: $font-family-code
+    +box-sizing(border-box)
+
+ul
+    margin: 0
+    padding: 0
+
+#settings
+    display: block
+    +position(fixed, 0 0 null null)
+    +size(32px)
+    background: url(../image/icon_settings.svg) no-repeat center
+    z-index: 10
+    cursor: pointer
+
+line
+    display: block
+    position: relative
+    margin-left: 24px
+    border-top: #eee 1px solid
+
+    &::after
+        content: ""
+        +position(absolute, 3px null null -17px)
+        +size(10px)
+        white-space: pre-wrap
+        background: no-repeat
+        background-size: 10px auto
+
+    &.prompt
+        color: #0080ff
+
+        &::after
+            background-image: url(../image/icon_arrow.svg)
+
+    &.error
+        &::after
+            background-image: url(../image/icon_error.svg)
+
+    &.warn
+        &::after
+            background-image: url(../image/icon_warn.svg)
+
+item
+    display: inline-block
+
+    &.err
+        color: #f00
+
+    &.undefined
+        color: #999
+
+    &.number
+        color: #20c
+
+    &.string
+        white-space: pre-wrap
+        color: #c22
+
+        &::before,
+        &::after
+            content: "\""
+            color: #000
+
+    &.function
+        white-space: pre-wrap
+        color: #000
+
+    &.array
+        display: block
+
+        &::before
+            content: "["
+        &::after
+            content: "]"
+
+    &.object
+        display: block
+
+        &::before
+            content: "{"
+        &::after
+            content: "}"
+
+    &.objectElement
+        display: block
+        margin-left: 2em
+
+    &.key
+        float: left
+        margin-right: .5em
+        color: #881391
+
+    &.val
+        display: block
+        vertical-align: top
+
+    &.node
+        color: #999
+
+    &.tag
+        color: #881280
+
+        &::before
+            margin-right: -.5em
+            content: "<"
+        &::after
+            content: ">"
+
+    &.tag-name,
+    &.tag-attribute
+        margin-left: .5em
+
+    &.tag-attribute-name
+        color: #994500
+
+    &.tag-attribute-value
+        color: #1a1aa6
+
+        &::before,
+        &::after
+            color: #881280
+        &::before
+            content: "=\""
+        &::after
+            content: "\""
+
+#promptLine
+    position: relative
+    clear: right
+    min-height: 1.5em
+
+    &::after
+        background-image: url(../image/icon_arrow_active.svg)
+
+#prompt
+    color: #000
+    outline: none
+    -webkit-user-modify: read-write-plaintext-only
+
+#autoComplete
+    overflow-y: scroll
+    position: absolute
+    color: #000
+    background: #fff
+    border: #aaa 1px solid
+    border-radius: 5px
+
+    &.below
+        border-top-left-radius: 0
+
+    &.above
+        bottom: 100%
+        border-bottom-left-radius: 0
+
+    > li
+        padding: 0 3px
+        list-style: none
+        border: transparent 1px solid
+
+        &.active
+            background: #d4d4d4
+        &:hover
+            border-color: #ccc
+
+.tips
+    display: none
+    position: fixed
+    padding: .5em 1em
+    color: #fff
+    background: rgba(0,0,0,0.75)
+
+    &::after
+        content: ""
+        position: absolute
+        width: 0
+        height: 0
+
+    &.topleft::after
+        left: 0
+        top: -6px
+        border: transparent solid
+        border-width: 0 6px 6px
+        border-bottom-color: rgba(0,0,0,.75)
+
+    &.topright::after
+        right: 0
+        top: -6px
+        border: transparent solid
+        border-width: 0 6px 6px
+        border-bottom-color: rgba(0,0,0,.75)
+
+    &.active
+        display: block
+
+    &[name="assignVariables"]
+        position: absolute
+        left: 0
+        bottom: -3em
+
+    &[name="settings"]
+        right: 10px
+        top: 32px

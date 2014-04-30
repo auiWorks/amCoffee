@@ -1,6 +1,3 @@
-window.addEventListener 'load', ->
-    C.init()
-
 C =
     storage : (key, value) ->
         json = localStorage.getItem key
@@ -38,3 +35,6 @@ C =
         value = this.checked
 
         C.setting key, value
+
+
+C.init()

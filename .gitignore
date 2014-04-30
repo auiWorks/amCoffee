@@ -6,3 +6,4 @@ Desktop.ini
 node_modules
 
 /dist/
+/src/sass/bourbon/
