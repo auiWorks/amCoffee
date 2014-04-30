@@ -1,4 +1,4 @@
-<img height="150" src="https://raw.github.com/auiWorks/amCoffee/master/amCoffee/image/logo.png" />
+<img height="150" src="https://raw.githubusercontent.com/auiWorks/amCoffee/master/src/image/logo.png" />
 ========
 
 A CoffeeScript version of the Chrome Console.
@@ -19,6 +19,7 @@ Use it the way you use the original console, but with CoffeeScript!
 Usage
 -----
 
+1. gem install bourbon
 1. npm install
-2. grunt
-3. Import "amCoffee" folder into Chrome.
+1. grunt
+1. Import "amCoffee" folder into Chrome.
