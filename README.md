@@ -1,5 +1,7 @@
-<img height="150" src="https://raw.githubusercontent.com/auiWorks/amCoffee/master/src/image/logo.png" />
+amCoffee
 ========
+
+<img height="150" src="https://raw.githubusercontent.com/auiWorks/amCoffee/master/src/image/icon128.png" />
 
 A CoffeeScript version of the Chrome Console.
 
