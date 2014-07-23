@@ -84,12 +84,12 @@ C =
 
     # inject amCoffee object into inspected window
     inject : ->
-        chrome.devtools.inspectedWindow.eval """
+        chrome.devtools.inspectedWindow.eval """(function () {
             if (window.__amCoffee__) return;
             window.__amCoffee__ = {
                 process : #{C.process.toString()}
             };
-        """, C.console.init
+        })();""", C.console.init
 
     focusPrompt : (e) ->
         C.$prompt.focus()
