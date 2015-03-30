@@ -25,3 +25,12 @@ Usage
 1. npm install
 1. grunt
 1. Import "dist" folder into Chrome.
+
+Shortcuts
+---------
+
+* `Tab`/`Right` and `Shift+Tab`: Navigate the autocomplete
+* `Up`/`Down` or `Cmd(Ctrl)+K`/`Cmd(Ctrl)+J`: Browse the history
+* `Cmd(Ctrl)+L`: Clear the screen
+* `Cmd(Ctrl)+U`: Clear the input prompt
+* `Cmd(Ctrl)+R`: Reload the inspected web page
